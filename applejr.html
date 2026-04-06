@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#1abc9c" />
+    <meta name="msapplication-navbutton-color" content="#1abc9c" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <title>AppleJr</title>
+    <meta name="description" content="IPA Installer for Roblox Executor (Delta Executor, Krnl Executor iOS), Esign/KSign/Flekstore on iPhone/iPad With Anti-Revoke." />
+    <style>
+:root{
+  --primary:#1abc9c;
+  --primary-dark:#16a085;
+  --bg-dark:#1c1c1e;
+  --bg-light:#2c2c2e;
+  --text-light:#fff;
+  --text-muted:#aaa;
+  --glass-border:rgba(255,255,255,.2);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#111;color:var(--text-light);padding-bottom:70px;}
+.page{display:none;padding:20px;}
+.page.active{display:block;}
+.page-container{max-width:700px;margin:0 auto;}
+
+header{padding:8px;text-align:center;font-size:17px;font-weight:600;
+  position:sticky;top:0;z-index:10;
+  background:rgba(28,28,30,0.55);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--glass-border);
+}
+
+.meta{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:rgba(246,250,255,.75);}
+
+.dot-green-mini{width:6px;height:6px;border-radius:50%;background:#00ff6a;flex-shrink:0;
+  box-shadow:0 0 4px rgba(0,255,106,.9),0 0 8px rgba(0,255,106,.6);
+  animation:greenPulse 1.8s ease-in-out infinite;}
+
+@keyframes greenPulse{
+  0%{opacity:.6;box-shadow:0 0 2px rgba(0,255,106,.6),0 0 6px rgba(0,255,106,.4);}
+  50%{opacity:1;box-shadow:0 0 6px rgba(0,255,106,1),0 0 14px rgba(0,255,106,.9),0 0 22px rgba(0,255,106,.6);}
+  100%{opacity:.6;box-shadow:0 0 2px rgba(0,255,106,.6),0 0 6px rgba(0,255,106,.4);}
+}
+
+.featured-container{display:flex;gap:12px;overflow-x:auto;padding:10px 5px 20px;scroll-snap-type:x mandatory;scroll-behavior:smooth;}
+.featured-card{flex:0 0 75%;max-width:75%;height:160px;border-radius:16px;overflow:hidden;scroll-snap-align:start;cursor:pointer;position:relative;box-shadow:0 4px 16px rgba(0,0,0,0.5);}
+.featured-card img{width:100%;height:100%;object-fit:cover;}
+.featured-info{position:absolute;bottom:0;left:0;right:0;padding:10px;background:linear-gradient(to top,rgba(0,0,0,0.6),transparent);}
+.featured-info h3{margin:0;font-size:25px;font-weight:700;}
+.featured-info p{margin:0;font-size:12px;color:#d3cece;}
+@media(max-width:600px){.featured-card{height:180px;}}
+
+.left{display:flex;gap:12px;align-items:center;flex:1;}
+.buttons{display:flex;gap:8px;flex-shrink:0;align-items:center;}
+
+.modal-content article,.modal-content body,#modalBody{max-width:100%;font-size:15px;line-height:1.6;color:#ddd;}
+#modalBody h1{font-size:20px;margin-bottom:12px;}
+#modalBody h2{font-size:18px;margin-top:18px;margin-bottom:8px;}
+#modalBody p{margin-bottom:12px;font-size:14px;}
+#modalBody iframe{width:100%;height:200px;border-radius:10px;}
+@media(min-width:600px){#modalBody iframe{height:300px;}}
+.article-body{font-size:15px;line-height:1.6;color:#eee;}
+.article-body h1,.article-body h2,.article-body h3{font-size:18px;margin-top:12px;margin-bottom:6px;color:#fff;}
+.article-body p{margin:10px 0;}
+.article-body iframe{max-width:100%;border-radius:10px;}
+
+html,body{height:100%;margin:0;padding:0;overscroll-behavior-y:none;}
+body{min-height:100svh;background:#000;}
+.page{min-height:100svh;}
+
+.sub-tabs{display:flex;gap:10px;padding:10px;margin-bottom:18px;
+  background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.18);border-radius:18px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.22),0 10px 28px rgba(0,0,0,0.32);}
+
+.sub-tab{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:2px;
+  padding:14px 8px;border-radius:16px;font-size:14.5px;font-weight:600;
+  color:rgba(255,255,255,0.9);background:rgba(255,255,255,0.07);cursor:pointer;transition:all 0.25s ease;}
+.sub-tab svg{width:16px;height:16px;fill:currentColor;flex-shrink:0;}
+.sub-tab:hover{background:rgba(255,255,255,0.14);}
+.sub-tab.active{background:rgba(255,255,255,0.92);color:#007aff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.9),0 6px 18px rgba(0,0,0,0.35);}
+@media(max-width:430px){
+  .sub-tab{font-size:14px;padding:13px 6px;}
+  .sub-tab svg{width:15px;height:15px;}
+}
+
+.card{background:var(--bg-dark);border-radius:16px;padding:18px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.card .left{display:flex;align-items:center;gap:12px;}
+.card h3{margin:0;font-size:20px;font-weight:600;}
+.card small{color:var(--text-muted);font-size:13px;}
+.card .rating{font-size:12px;color:#ffcc00;margin-top:4px;}
+.app-icon{width:60px;height:60px;border-radius:10px;flex-shrink:0;object-fit:cover;}
+
+.badge{background:linear-gradient(180deg,#f7f7f7 0%,#e6e6e6 100%);color:#007aff;
+  padding:8px 22px;border-radius:9999px;font-size:15px;font-weight:600;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;min-width:80px;
+  border:1px solid rgba(0,0,0,0.1);box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);
+  transition:all 0.2s ease;cursor:pointer;}
+.badge:hover{background:linear-gradient(180deg,#ffffff 0%,#dcdcdc 100%);}
+.badge:active{background:linear-gradient(180deg,#dcdcdc 0%,#c8c8c8 100%);}
+
+h1{text-align:center;margin-bottom:26px;font-weight:700;letter-spacing:.4px;color:#fff;}
+
+form{position:relative;max-width:720px;margin:0 auto;padding:28px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.18),rgba(255,255,255,0.05),rgba(255,255,255,0.12));
+  backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-radius:22px;border:1px solid rgba(255,255,255,0.22);
+  box-shadow:0 18px 60px rgba(0,0,0,0.55),inset 0 1px 0 rgba(255,255,255,0.25);
+  overflow:hidden;animation:liquidGlow 6s ease-in-out infinite;}
+form::before{content:"";position:absolute;top:-40%;left:-40%;width:140%;height:140%;
+  background:radial-gradient(circle at top left,rgba(255,255,255,0.35),transparent 55%);pointer-events:none;}
+form::after{content:"";position:absolute;inset:-2px;
+  background:linear-gradient(120deg,transparent 30%,rgba(26,188,156,0.35),rgba(0,255,255,0.25),transparent 70%);
+  filter:blur(28px);opacity:.6;z-index:-1;animation:glowMove 8s linear infinite;}
+
+label{font-size:14px;font-weight:600;margin-top:14px;margin-bottom:6px;display:block;color:rgba(255,255,255,0.92);}
+
+input[type=file],input[type=password],select{width:100%;padding:13px 15px;margin-bottom:16px;
+  background:rgba(255,255,255,0.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:14px;border:1px solid rgba(255,255,255,0.18);color:#fff;font-size:14px;outline:none;transition:all .3s ease;}
+input:focus,select:focus{background:rgba(255,255,255,0.22);border-color:#1abc9c;
+  box-shadow:0 0 0 2px rgba(26,188,156,.45),inset 0 1px 0 rgba(255,255,255,0.3);}
+input[type=file]::file-selector-button{background:linear-gradient(135deg,#1abc9c,#00f2fe);border:none;color:#fff;padding:7px 14px;border-radius:10px;cursor:pointer;font-weight:600;}
+
+@keyframes liquidGlow{
+  0%{box-shadow:0 18px 60px rgba(0,0,0,.55);}
+  50%{box-shadow:0 22px 75px rgba(26,188,156,.45);}
+  100%{box-shadow:0 18px 60px rgba(0,0,0,.55);}
+}
+@keyframes glowMove{
+  0%{transform:translateX(-40%);}
+  100%{transform:translateX(40%);}
+}
+
+button,.link-btn{width:100%;padding:12px;border:none;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;margin-top:8px;}
+button{background:var(--primary);color:#fff;}
+button:hover{background:var(--primary-dark);}
+.link-btn{background:#444;color:#fff;text-align:center;text-decoration:none;display:block;}
+#loader{text-align:center;display:none;margin-top:10px;}
+#progressBar{width:100%;height:6px;background:#333;border-radius:4px;margin-top:10px;display:none;}
+#progressBar div{height:100%;width:0;background:var(--primary);border-radius:4px;transition:width .2s;}
+#resultBtns{display:none;margin-top:10px;}
+
+.drop-zone{background:var(--bg-light);border:2px dashed rgba(255,255,255,.25);border-radius:12px;padding:25px;text-align:center;cursor:pointer;margin-bottom:16px;transition:.2s;}
+.drop-zone.dragover{border-color:var(--primary);color:var(--primary);}
+
+.toggle-group{display:flex;justify-content:space-between;align-items:center;margin:15px 0;}
+.switch{position:relative;display:inline-block;width:50px;height:28px;}
+.switch input{display:none;}
+.slider{position:absolute;top:0;left:0;right:0;bottom:0;background:#555;transition:.3s;border-radius:34px;}
+.slider:before{content:"";position:absolute;height:20px;width:20px;left:4px;bottom:4px;background:white;transition:.3s;border-radius:50%;}
+.switch input:checked + .slider{background:var(--primary);}
+.switch input:checked + .slider:before{transform:translateX(22px);}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:999;}
+.modal-content{position:relative;background:rgba(28,28,30,0.55);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border:1px solid var(--glass-border);border-radius:14px;padding:16px;max-width:520px;width:90%;max-height:80%;overflow-y:auto;}
+.modal-close{position:absolute;top:10px;right:10px;background:var(--primary);border:none;color:#fff;font-size:16px;width:32px;height:28px;border-radius:8px;cursor:pointer;}
+
+.bottom-nav-glass{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);
+  display:flex;justify-content:space-around;align-items:center;
+  width:88%;max-width:394px;height:63px;border-radius:28px;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:0 6px 20px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.15);z-index:1000;}
+
+.page,.page-container{padding-bottom:100px;}
+@supports(padding:env(safe-area-inset-bottom)){
+  .page,.page-container{padding-bottom:calc(100px + env(safe-area-inset-bottom));}
+}
+
+.bottom-nav-glass::before{content:"";position:absolute;top:0;left:10%;width:80%;height:1px;background:rgba(255,255,255,0.15);border-radius:50%;}
+
+.nav-link{flex:1;text-align:center;color:#ffffff;font-size:13px;text-decoration:none;
+  display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;
+  transition:color 0.3s ease,transform 0.3s ease;position:relative;}
+.nav-link svg{width:24px;height:24px;fill:currentColor;transition:all 0.4s ease;}
+.nav-link.active{color:var(--primary);transform:translateY(-2px) scale(1.04);text-shadow:0 0 1.5px var(--primary);}
+.nav-link.active svg{filter:drop-shadow(0 0 1.5px var(--primary));}
+
+.page{opacity:0;transform:translateY(10px);transition:opacity 0.5s ease,transform 0.5s ease;}
+.page.active{opacity:1;transform:translateY(0);}
+
+.nav-link.active::after{content:"";position:absolute;bottom:0;width:35px;height:35px;border-radius:50%;
+  background:radial-gradient(circle,var(--primary) 0%,transparent 70%);opacity:0.2;
+  filter:blur(10px);z-index:-1;animation:pulse 2s infinite ease-in-out;}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:0.25;}
+  50%{transform:scale(1.3);opacity:0.4;}
+}
+
+.tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+@media(max-width:900px){.tools-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:600px){.tools-grid{grid-template-columns:repeat(2,1fr);}}
+
+.tool-card{background:#1c1c1e;border-radius:14px;padding:12px;text-align:center;}
+.tool-card img{width:56px;height:56px;border-radius:12px;margin-bottom:8px;}
+.tool-card h4{font-size:14px;margin:4px 0;}
+.tool-card small{font-size:12px;opacity:0.7;display:block;}
+.tool-card a{background:linear-gradient(180deg,#f7f7f7 0%,#e6e6e6 100%);color:#007aff;padding:8px 22px;border-radius:9999px;font-size:15px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;min-width:80px;border:1px solid rgba(0,0,0,0.1);box-shadow:inset 0 1px 0 rgba(255,255,255,0.6);transition:all 0.2s ease;cursor:pointer;}
+.tool-card a:hover{background:linear-gradient(180deg,#ffffff 0%,#dcdcdc 100%);}
+.tool-card a:active{background:linear-gradient(180deg,#dcdcdc 0%,#c8c8c8 100%);transform:scale(0.96);}
+
+.tools-category{display:flex;gap:8px;margin-bottom:14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tools-category::-webkit-scrollbar{display:none;}
+.tool-cat{padding:8px 16px;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap;
+  color:rgba(255,255,255,0.95);background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.25),0 4px 12px rgba(0,0,0,0.25);cursor:pointer;transition:all 0.25s ease;}
+.tool-cat:hover{background:rgba(255,255,255,0.18);}
+.tool-cat.active{background:rgba(255,255,255,0.9);color:#007aff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.8),0 6px 16px rgba(0,0,0,0.3);}
+@media(max-width:390px){.tool-cat{padding:7px 14px;font-size:13.5px;}}
+
+.tools-note{margin:10px 0 16px;padding:10px 14px;font-size:14px;line-height:1.6;color:#bfc7cf;
+  background:rgba(255,255,255,0.08);border-radius:14px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 1px 2px rgba(0,0,0,0.25);}
+
+.text-btn{all:unset;display:inline;padding:1px 5px;margin:0 2px;font-size:13px;font-weight:500;color:#6ab0ff;
+  background:rgba(255,255,255,0.08);border-radius:6px;cursor:pointer;white-space:nowrap;}
+.text-btn:hover{background:rgba(255,255,255,0.14);}
+.text-btn:active{background:rgba(255,255,255,0.22);}
+
+.tools-search-glass{display:flex;align-items:center;gap:10px;padding:14px 16px;margin:12px 0 18px;
+  background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-radius:18px;
+  backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.15),0 10px 30px rgba(0,0,0,0.35);}
+.tools-search-glass .search-icon{font-size:16px;opacity:0.6;}
+.tools-search-glass input{flex:1;background:transparent;border:none;outline:none;font-size:14px;color:#fff;}
+.tools-search-glass input::placeholder{color:rgba(255,255,255,0.45);}
+.tools-search-glass:focus-within{border-color:rgba(255,255,255,0.35);}
+
+.repo-card{margin-top:24px;padding:22px;border-radius:26px;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 24px 60px rgba(0,0,0,.5);}
+
+.repo-note{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;margin:6px 0 20px;
+  font-size:14px;line-height:1.55;color:rgba(255,255,255,.92);
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-radius:18px;
+  backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 10px 28px rgba(0,0,0,.38);}
+.repo-note-icon{font-size:18px;opacity:.85;flex-shrink:0;}
+
+.repo-item{margin-top:24px;text-align:center;}
+.repo-item strong{display:block;font-size:16px;font-weight:700;margin-bottom:14px;color:rgba(255,255,255,.96);}
+.repo-actions{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;}
+.repo-btn{min-width:128px;padding:13px 20px;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;
+  font-size:14.5px;font-weight:600;letter-spacing:.25px;color:rgba(255,255,255,.96);text-decoration:none;
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 26px rgba(0,0,0,.4);
+  transition:transform .18s ease,background .18s ease,box-shadow .18s ease;}
+.repo-btn:hover{background:rgba(255,255,255,.2);}
+.repo-btn:active{transform:scale(.94);background:rgba(255,255,255,.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 16px rgba(0,0,0,.4);}
+.repo-btn img{width:22px;height:22px;object-fit:contain;background:none;border-radius:0;padding:0;box-shadow:none;opacity:.92;}
+.repo-btn.esign{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 26px rgba(0,255,150,.12);}
+.repo-btn.scarlet{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 26px rgba(255,80,80,.14);}
+.repo-btn.ksign{box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 26px rgba(90,150,255,.18);}
+@media(max-width:420px){.repo-btn{min-width:100%;}}
+
+.featured-pro{background:rgba(255,255,255,.06);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-radius:14px;padding:14px 12px;border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 8px 24px rgba(0,0,0,.25);max-width:100%;overflow-x:hidden;}
+.featured-header{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin-bottom:12px;}
+.featured-chip{font-size:11px;padding:3px 8px;border-radius:999px;background:linear-gradient(180deg,#ffcc70,#ff9f1c);color:#222;font-weight:700;}
+
+.featured-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.featured-item{position:relative;background:rgba(255,255,255,.08);border-radius:14px;padding:10px;display:flex;align-items:center;gap:10px;transition:.25s ease;}
+.featured-item.pro{background:linear-gradient(135deg,rgba(26,188,156,.18),rgba(26,188,156,.05));border:1px solid rgba(26,188,156,.35);}
+.featured-item img{width:42px;height:42px;border-radius:10px;flex-shrink:0;}
+.f-info{flex:1;min-width:0;}
+.f-title{font-size:13px;font-weight:600;}
+.f-desc{font-size:11px;opacity:.75;line-height:1.3;}
+.f-rating{font-size:11px;opacity:.9;margin-top:2px;}
+.featured-item.pro::after{content:attr(data-badge);position:absolute;top:-6px;right:-6px;font-size:10px;padding:4px 7px;border-radius:999px;background:#ff3b30;color:#fff;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,.25);}
+.featured-item .badge{padding:4px 14px;font-size:15px;min-width:auto;}
+.featured-item:hover{transform:translateY(-3px);}
+
+@media(max-width:480px){
+  .featured-grid{grid-template-columns:1fr;}
+  .featured-item{padding:16px;gap:14px;}
+  .featured-item img{width:48px;height:48px;}
+  .f-title{font-size:15px;}
+  .f-desc{font-size:13px;}
+  .f-rating{font-size:12px;}
+  .featured-item .badge{font-size:13px;padding:6px 18px;}
+}
+@media(max-width:740px) and (orientation:landscape){.featured-grid{grid-template-columns:1fr;}}
+.featured-item,.f-info{min-width:0;}
+
+.ipa-card{padding:16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);margin:16px 0;}
+.ipa-card h3{margin:0 0 12px;font-size:18px;}
+
+.nav-link{position:relative;}
+.nav-has-new{position:relative;}
+.nav-tag-new{position:absolute;top:0px;right:14px;font-size:5px;font-weight:700;letter-spacing:.8px;padding:2px 6px;background:#ff3b30;color:#fff;border-radius:4px;transform:rotate(13deg);transform-origin:center;box-shadow:0 2px 6px rgba(0,0,0,0.2);}
+
+.cat-list{display:none;}
+.cat-list.active{display:block;}
+    </style>
+  </head>
+  <body>
+    <header id="pageTitle">AppleJr</header>
+
+    <div id="page-library" class="page active">
+      <div class="page-container">
+        <div class="featured-container" id="featuredSlider">
+          <div class="featured-card" data-feature="esign">
+            <img src="https://i.imgur.com/1kQPy0tm.jpeg" loading="lazy" />
+            <div class="featured-info">
+              <h3>Can't Install ?</h3>
+              <p>Fix Unable to Install Esign/Scarlet/Ksign</p>
+            </div>
+          </div>
+          <div class="featured-card" data-feature="scarlet">
+            <img src="https://i.imgur.com/R2IKt2km.jpeg" loading="lazy" />
+            <div class="featured-info">
+              <h3>IPA Library</h3>
+              <p>AppleJr New Features IPA</p>
+            </div>
+          </div>
+          <div class="featured-card" data-feature="pojav">
+            <img src="https://i.imgur.com/bOMvrzbm.jpeg" loading="lazy" />
+            <div class="featured-info">
+              <h3>Free Signer</h3>
+              <p>Sideload IPA from Server Certificate</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-tabs">
+          <div class="sub-tab active" data-cat="esign">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M16.365 1.43c-.95.05-2.1.68-2.77 1.47-.6.73-1.13 1.88-.93 2.98 1.02.08 2.08-.52 2.72-1.3.63-.77 1.1-1.93.98-3.06z"/>
+              <path d="M20.88 8.08c-.63-.8-1.47-1.7-2.57-1.72-1.08-.02-1.53.56-2.87.56-1.33 0-1.83-.54-2.87-.54-1.17.02-2.04.95-2.68 1.75-1.85 2.3-1.54 6.63.36 9.44.52.78 1.22 1.64 2.1 1.62.84-.02 1.16-.54 2.18-.54s1.3.54 2.84.52c.9-.02 1.57-.8 2.1-1.58.36-.52.66-1.08.9-1.68-2.36-.9-2.74-4.3-.4-5.6.48-.28 1.27-.52 1.9-.56-.2-.68-.52-1.32-.9-1.82z"/>
+            </svg>
+            Esign
+          </div>
+          <div class="sub-tab" data-cat="zsign">
+            <svg viewBox="0 0 24 24"><path d="M12 2L1.5 9l10.5 7 10.5-7L12 2zM1.5 15l10.5 7 10.5-7"/></svg>
+            Ksign
+          </div>
+          <div class="sub-tab" data-cat="scarlet">
+            <svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.58 9.43-9 10-5.42-.57-9-5-9-10V6l9-4z"/></svg>
+            Scarlet
+          </div>
+          <div class="sub-tab" data-cat="certificate">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 3a9 9 0 1 0 9 9c0-.34-.02-.67-.06-1H19l-2-2-2 2h-1v1l-2 2v2h-2v2H8v2H6v2h12v-2h-2v-2h-2v-2l2-2h1l2-2 2 2h1.94c.04-.33.06-.66.06-1a9 9 0 0 0-9-9zm0 4a5 5 0 1 1 0 10 5 5 0 0 1 0-10z"/>
+            </svg>
+            Certs
+          </div>
+        </div>
+
+        <div class="featured-simple featured-pro">
+          <div class="featured-header">⭐ Featured <span class="featured-chip">TRENDING</span></div>
+          <div class="featured-grid">
+            <div class="featured-item pro" data-badge="HOT">
+              <img src="https://i.imgur.com/RHKLBQ7m.jpeg" loading="lazy" />
+              <div class="f-info">
+                <div class="f-title">Minecraft</div>
+                <div class="f-desc">Java Edition iOS</div>
+                <div class="f-rating">⭐ 1.2M+</div>
+              </div>
+              <a class="badge" href="https://youtu.be/qvn5_fRA88A?si=Gdv2A3-PNg-xV16F">Install</a>
+            </div>
+            <div class="featured-item pro" data-badge="NEW">
+              <img src="https://i.imgur.com/yh6FHmBm.jpeg" loading="lazy" />
+              <div class="f-info">
+                <div class="f-title">Delta Executor Key</div>
+                <div class="f-desc">Get Delta Key 2026</div>
+                <div class="f-rating">⭐ 1.1M+</div>
+              </div>
+              <a class="badge" href="https://youtu.be/vM5T2Xa1c4Q">Get</a>
+            </div>
+            <div class="featured-item">
+              <img src="https://i.imgur.com/iwcjE2xm.png" loading="lazy" />
+              <div class="f-info">
+                <div class="f-title">Auto Clicker</div>
+                <div class="f-desc">Auto Clicker iOS</div>
+                <div class="f-rating">⭐ 1.1M+</div>
+              </div>
+              <a class="badge" href="https://youtu.be/tsJj330FU4E?si=rA22HPFgvZYpFd4Y">Install</a>
+            </div>
+            <div class="featured-item pro" data-badge="VIRAL">
+              <img src="https://i.imgur.com/klEE3S3m.png" loading="lazy" />
+              <div class="f-info">
+                <div class="f-title">PlayStation 2 iOS</div>
+                <div class="f-desc">Install PS2 Games</div>
+                <div class="f-rating">⭐ 781K+</div>
+              </div>
+              <a class="badge" href="https://youtu.be/yHTRUKp7Y90?si=d7BNlDGE5q2fEPr-">Install</a>
+            </div>
+            <div class="featured-item">
+              <img src="https://i.imgur.com/f9eCYlxm.png" loading="lazy" />
+              <div class="f-info">
+                <div class="f-title">XeniOS</div>
+                <div class="f-desc">Xbox 360 Emulator iOS</div>
+                <div class="f-rating">⭐ 983K+</div>
+              </div>
+              <a class="badge" href="https://youtu.be/KAb3Z-m-KEo?si=RRyNi2iHzb1kLj7R">Install</a>
+            </div>
+            <div class="featured-item pro" data-badge="NEW">
+              <img src="https://i.imgur.com/ExshY6im.png" loading="lazy" />
+              <div class="f-info">
+                <div class="f-title">iLoader IPA Sign</div>
+                <div class="f-desc">Permanent IPA Installer</div>
+                <div class="f-rating">⭐ 4.1M+</div>
+              </div>
+              <a class="badge" href="https://youtu.be/AzoZ4WFjyNA?si=r8SpZ3HyVMVDg70s">Install</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ESIGN -->
+        <div id="cat-esign" class="cat-list active">
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/yQ9U0Lzm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>AppleJr DNS</h3>
+                <small>• Anti-Revoke</small>
+                <div class="rating">Required to Install Esign</div>
+              </div>
+            </div>
+            <a href="https://d1yei2z3i6k35z.cloudfront.net/14890634/68f7bbc35c7c2_signed_AppleJrV22.mobileconfig" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>NEW Esign</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • XL Axiata</small>
+                <div class="rating">⭐ 3.001.293</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/download/c16c893a-0079-4293-bd7e-6fbfdf683030.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>ESign</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • XL Axiata</small>
+                <div class="rating">⭐ 3.112.770</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_5.0.2_XL.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>NEW Esign</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • BOC Limited 1</small>
+                <div class="rating">⭐ 104.944</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/esign_boc1.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>NEW Esign</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • BOC Limited 2</small>
+                <div class="rating">⭐ 93.044</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/esign_boc2.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>NEW Esign</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • BOC Limited 4</small>
+                <div class="rating">⭐ 99.710</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/esign_boc3.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>ESign</h3>
+                <small>• Oilwell Provision 2</small>
+                <div class="rating">⭐ 1.103.774</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_5.0.2_NOV.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>ESign</h3>
+                <small>• National Oilwell</small>
+                <div class="rating">⭐ 2.999.104</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/oilesign.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>ESign</h3>
+                <small>• VIETNAM AIRLINES</small>
+                <div class="rating">⭐ 731.111</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_VietnamAirlines.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>ESign</h3>
+                <small>• ForeverMark</small>
+                <div class="rating">⭐ 1.101.991</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Forevermark.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>ESign</h3>
+                <small>• PowerChina</small>
+                <div class="rating">⭐ 99.312</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/esignpwerchina.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• China Academy</small>
+                <div class="rating">⭐ 998.288</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/esignacademy.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Qingdao Rural</small>
+                <div class="rating">⭐ 337.128</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/qingdao%20esign.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Election United</small>
+                <div class="rating">⭐ 221.292</div>
+              </div>
+            </div>
+            <div class="buttons">
+              <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_United.plist" class="badge" rel="noopener noreferrer">Install</a>
+            </div>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Guangzhou Huahan</small>
+                <div class="rating">⭐ 578.210</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Guangzhou.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• China Telecom</small>
+                <div class="rating">⭐ 29.473</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_ChinaTelecom.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• EEO Certs</small>
+                <div class="rating">⭐ 81.983</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Education.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Chiba Tech</small>
+                <div class="rating">⭐ 128.983</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Chiba.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Tianjin University</small>
+                <div class="rating">⭐ 101.933</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Atianjin.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Central P12</small>
+                <div class="rating">⭐ 111.019</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Central.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• TakeOff MP1</small>
+                <div class="rating">⭐ 221.032</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Takeoff.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• Power Corp</small>
+                <div class="rating">⭐ 201.226</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_Wuling.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/ptoEbcym.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Esign</h3>
+                <small>• TCL AC</small>
+                <div class="rating">⭐ 100.195</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Esign_TCL.plist" class="badge">Install</a>
+          </div>
+        </div>
+
+        <!-- KSIGN -->
+        <div id="cat-zsign" class="cat-list">
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/yQ9U0Lzm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>AppleJr DNS</h3>
+                <small>• Anti-Revoke</small>
+                <div class="rating">Required to Install Ksign</div>
+              </div>
+            </div>
+            <a href="https://d1yei2z3i6k35z.cloudfront.net/14890634/68f7bbc35c7c2_signed_AppleJrV22.mobileconfig" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/347Q9VHm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Ksign</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • XL AXIATA</small>
+                <div class="rating">⭐ 1.001.931</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Ksign_XL.plist" class="badge">Install</a>
+          </div>
+        </div>
+
+        <!-- SCARLET -->
+        <div id="cat-scarlet" class="cat-list">
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/yQ9U0Lzm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>AppleJr DNS</h3>
+                <small>• Anti-Revoke</small>
+                <div class="rating">Required to Install Scarlet</div>
+              </div>
+            </div>
+            <a href="https://d1yei2z3i6k35z.cloudfront.net/14890634/68f7bbc35c7c2_signed_AppleJrV22.mobileconfig" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/5XhsTq9m.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet V2</h3>
+                <small class="meta"><span class="dot-green-mini"></span>Signed • XL AXIATA</small>
+                <div class="rating">⭐ 3.012.999</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/ScarletApps_XL.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/5XhsTq9m.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet V2</h3>
+                <small>• Updated National Oilwel</small>
+                <div class="rating">⭐ 10.133</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/Scarlet_NOV2.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/KuehszZm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet V1</h3>
+                <small>Signed • Updated National Oilwel</small>
+                <div class="rating">⭐ 1.712.222</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.net/post/ScarletApps_NOV.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/KuehszZm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet</h3>
+                <small>• Tianjin University</small>
+                <div class="rating">⭐ 211.113</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.cloud/manual/signed/Scarlet_Tianjin.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/KuehszZm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet</h3>
+                <small>• Education Certs</small>
+                <div class="rating">⭐ 11.939</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.cloud/manual/signed/Scarlet_Education.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/KuehszZm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet</h3>
+                <small>• Viet Telecom</small>
+                <div class="rating">⭐ 121.552</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.cloud/manual/signed/Scarlet_Viettel.plist" class="badge">Install</a>
+          </div>
+          <div class="card">
+            <div class="left">
+              <img src="https://i.imgur.com/KuehszZm.png" loading="lazy" class="app-icon" />
+              <div>
+                <h3>Scarlet</h3>
+                <small>• HDFC</small>
+                <div class="rating">⭐ 11.512</div>
+              </div>
+            </div>
+            <a href="itms-services://?action=download-manifest&url=https://applejr.cloud/manual/signed/Scarlet_HDFC.plist" class="badge">Install</a>
+          </div>
+        </div>
+
+        <!-- CERTS -->
+        <div id="cat-certificate" class="cat-list">
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>XL AXIATA, PT TBK</h3><small class="meta"><span class="dot-green-mini"></span>Signed • Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet/Flekst0re</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/XL%20AXIATA,%20PT%20TBK.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Updated National Oilwell NEW</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Updated%20National%20Oilwell%20Varco,%20Inc.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>VIETNAM AIRLINES</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/VIETNAM%20AIRLINES%20JSC.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>ForeverMark Marketing</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Forevermark%20%20Marketing(Shanghai%20)%20Limited.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>PowerChina International</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/PowerChina%20International%20Group%20Limited.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>China Academy</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet/FlekSt0re</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/China%20Academy.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Qingdao Rural Commercial</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Qingdao%20Rural%20Commercial%20Bank%20Co.,%20Ltd.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Luoyang Postal Administration</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Luoyang%20Postal%20Administration.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Commission on Election</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet/Flekst0re</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Commission%20on%20Elections.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>VietinBank</h3><small>Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Vietinbank.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Wasu Media</h3><small>• Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/wasu.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Etisalat Emirates</h3><small>• Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Etisalat.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Certificate ZIP</h3><small>• Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Cert%20AppleJr%203.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Heavy Duty Truck</h3><small>• Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/royilkom-alt/cert/raw/refs/heads/main/Truck.zip" class="badge">Download</a></div>
+          <div class="card"><div class="left"><img src="https://i.imgur.com/aEL0qKhm.png" loading="lazy" class="app-icon"/><div><h3>Guangzhou Huahan Educational</h3><small>• Import &amp; Export Certs</small><div class="rating">Esign/Ksign/Scarlet</div></div></div><a href="https://github.com/applejr12/signer/raw/refs/heads/main/Guangzhou%20Huahan%20Educational%20&%20Technology%20Co.,Ltd..zip" class="badge">Download</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JAILBREAK PAGE -->
+    <div id="page-source" class="page">
+      <div class="page-container">
+        <div class="ipa-card">
+          <h3>📚 Jailbreak Tools</h3>
+          <div class="repo-note">
+            <span class="repo-note-icon">ℹ️</span>
+            <span>Tap <b>Install</b> to install the IPA directly. If it doesn't install, make sure your certificate is trusted (Settings → General → VPN &amp; Device Management).</span>
+          </div>
+          <div class="repo-note">
+            <span class="repo-note-icon">ℹ️</span>
+            <span>You must <b>Install</b> <b>AppleJr DNS</b> to make it works. It is Avoid revoke and error while installing the Tool.</span>
+          </div>
+          <div class="featured-simple featured-pro">
+            <div class="featured-header">⭐ Featured Apps <span class="featured-chip">DIRECT INSTALL</span></div>
+            <div class="featured-grid">
+              <div class="featured-item pro" data-badge="Required">
+                <img src="https://i.imgur.com/yQ9U0Lzm.png" loading="lazy" />
+                <div class="f-info"><div class="f-title">AppleJr DNS</div><div class="f-desc">• Required Install</div></div>
+                <a class="badge" href="https://d1yei2z3i6k35z.cloudfront.net/14890634/68f7bbc35c7c2_signed_AppleJrV22.mobileconfig">Install</a>
+              </div>
+              <div class="featured-item pro" data-badge="NEW">
+                <img src="https://i.imgur.com/N8QVM1jm.jpeg" loading="lazy" />
+                <div class="f-info"><div class="f-title">Dopamine</div><div class="f-desc">Jailbreak iOS 15-16.7.15</div><div class="f-rating">⭐ 3.1M+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/dopamine.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="POPULAR">
+                <img src="https://i.imgur.com/t7E5POXm.jpeg" loading="lazy" />
+                <div class="f-info"><div class="f-title">TrollInstallerX</div><div class="f-desc">iOS 14-16.6.1</div><div class="f-rating">⭐ 2.2M+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/trollinstallerx.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/x630ZiX.png" loading="lazy" />
+                <div class="f-info"><div class="f-title">Fugu15</div><div class="f-desc">Jailbreak iOS 15-15.4.1</div><div class="f-rating">⭐ 392k+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/fugu15.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/nFLU4ERm.jpeg" loading="lazy" />
+                <div class="f-info"><div class="f-title">Xina15</div><div class="f-desc">Jailbreak iOS 15-15.1</div><div class="f-rating">⭐ 112k+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/xina15.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/7dLG71Km.png" loading="lazy" />
+                <div class="f-info"><div class="f-title">Taurine</div><div class="f-desc">Jailbreak iOS 14-14.8</div><div class="f-rating">⭐ 992k+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/taurine.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/4x2WnzJm.jpeg" loading="lazy" />
+                <div class="f-info"><div class="f-title">Unc0ver</div><div class="f-desc">Jailbreak iOS 11-14.3</div><div class="f-rating">⭐ 3m+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/unc0ver.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/hnoZi02m.jpeg" loading="lazy" />
+                <div class="f-info"><div class="f-title">Chimera</div><div class="f-desc">Jailbreak iOS 12-12.5.7</div><div class="f-rating">⭐ 3m+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/chimera.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/JvlhZPrm.png" loading="lazy" />
+                <div class="f-info"><div class="f-title">Freya</div><div class="f-desc">Jailbreak iOS 11-12.5.7</div><div class="f-rating">⭐ 732k+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/freya.plist">Install</a>
+              </div>
+              <div class="featured-item" data-badge="TOOLS">
+                <img src="https://i.imgur.com/ZztMJJwm.jpeg" loading="lazy" />
+                <div class="f-info"><div class="f-title">Phoenix</div><div class="f-desc">Jailbreak iOS 9-9.3.6</div><div class="f-rating">⭐ 732k+</div></div>
+                <a class="badge" href="itms-services://?action=download-manifest&url=https://applejr.net/post/applejr-panel/public/plist/phoenix.plist">Install</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGNER PAGE -->
+    <div id="page-signer" class="page">
+      <div class="page-container">
+        <form id="uploadForm" enctype="multipart/form-data">
+          <h1>AppleJr IPA Signer</h1>
+          <div class="drop-zone" id="dropZone">📥 Click here to Upload IPA</div>
+          <input type="file" name="ipa_file" id="ipa_file" accept=".ipa" required style="display:none;" />
+          <div class="toggle-group">
+            <span>🔐 Manual Certificate</span>
+            <label class="switch">
+              <input type="checkbox" id="certToggle" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div id="serverCertSection">
+            <label for="use_server_cert">📁 Select from Server<br/>
+              <a href="https://d1yei2z3i6k35z.cloudfront.net/14890634/68f7bbc35c7c2_signed_AppleJrV22.mobileconfig" style="color:#1abc9c;text-decoration:none;font-weight:500;margin-left:6px;">🌏 (AppleJr DNS Required)</a>
+            </label>
+            <select name="use_server_cert" id="use_server_cert">
+              <option value="">-- Select Certificate --</option>
+              <option value="1. XL AXIATA, PT TBK">1. XL AXIATA, PT TBK</option>
+              <option value="2. National Oilwell">2. National Oilwell</option>
+              <option value="3. Forevermark">3. Forevermark</option>
+              <option value="4. Qingdao">4. Qingdao</option>
+              <option value="5. VIETNAM AIRLINES">5. VIETNAM AIRLINES</option>
+              <option value="6. China Academy">6. China Academy</option>
+              <option value="7. ChinaTelecom">7. ChinaTelecom</option>
+              <option value="8. Atianjin">8. Atianjin</option>
+              <option value="9. Commission on Elections">9. Commission on Elections</option>
+            </select>
+          </div>
+          <div id="manualCertSection" style="display:none;">
+            <label for="p12_file">🗳️ Certificate (.p12)</label>
+            <input type="file" name="p12_file" id="p12_file" accept=".p12" />
+            <label for="mobileprovision_file">📄 MobileProvision</label>
+            <input type="file" name="mobileprovision_file" id="mobileprovision_file" accept=".mobileprovision" />
+            <label for="password">🔑 Certificate Password</label>
+            <input type="password" name="password" id="password" placeholder="Password" />
+          </div>
+          <button type="submit" id="submitBtn">🚀 Sign IPA</button>
+          <div id="loader">⏳ Signing... please wait</div>
+          <div id="progressBar"><div></div></div>
+          <div id="resultBtns">
+            <a id="installLink" href="#" class="link-btn" target="_blank">📲 Install IPA</a>
+            <a id="downloadLink" href="#" class="link-btn" target="_blank">⬇️ Download IPA</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- TOOLS PAGE -->
+    <div id="page-tools" class="page">
+      <div class="page-container">
+        <h2>IPA Tools</h2>
+        <p class="tools-note">
+          Download the IPA files listed below and install using
+          <button class="text-btn goto-library" data-sub="esign">Esign</button>
+          <button class="text-btn goto-library" data-sub="scarlet">Scarlet</button>
+          <button class="text-btn goto-library" data-sub="zsign">Ksign</button>
+          Or install using <button class="text-btn goto-signer">AppleJr Signer</button>.
+        </p>
+        <div class="tools-search-glass">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="toolsSearch" placeholder="Search by App name…" autocomplete="off" />
+        </div>
+        <div class="tools-category">
+          <button class="tool-cat active" data-cat="all">All</button>
+          <button class="tool-cat" data-cat="emulator">Emulator</button>
+          <button class="tool-cat" data-cat="jailbreak">Jailbreak</button>
+          <button class="tool-cat" data-cat="tweak">Tweak</button>
+          <button class="tool-cat" data-cat="games">Games</button>
+          <button class="tool-cat" data-cat="social-media">Social Media</button>
+          <button class="tool-cat" data-cat="music">Music</button>
+          <button class="tool-cat" data-cat="photo-video">Photo &amp; Video</button>
+        </div>
+        <div class="tools-grid" id="toolsGrid"></div>
+        <button class="badge" id="toolsLoadMore" style="margin-top:16px;display:none;">Load More</button>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" id="featureModal">
+      <div class="modal-content">
+        <button class="modal-close" id="modalClose">×</button>
+        <div id="modalBody"></div>
+      </div>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="bottom-nav-glass">
+      <div class="nav-link active" data-target="page-library">
+        <svg viewBox="0 0 24 24"><path d="M3 13h18v-2H3v2zM3 19h18v-2H3v2zM3 7h18V5H3v2z"/></svg>
+        <span>Installer</span>
+      </div>
+      <div class="nav-link" data-target="page-tools">
+        <svg viewBox="0 0 24 24">
+          <defs><mask id="ipa-cut"><rect width="24" height="24" fill="white"/><text x="11" y="15" text-anchor="middle" font-size="8.6" font-weight="900" font-family="system-ui,-apple-system,BlinkMacSystemFont" fill="black">IPA</text></mask></defs>
+          <path d="M4.5 1.5h10.5l4.5 4.5v15a2.5 2.5 0 0 1-2.5 2.5H4.5A2.5 2.5 0 0 1 2 21V4a2.5 2.5 0 0 1 2.5-2.5z" fill="currentColor" mask="url(#ipa-cut)"/>
+          <path d="M15 1.5V6h4.5" fill="currentColor" mask="url(#ipa-cut)"/>
+        </svg>
+        <span>Library</span>
+      </div>
+      <div class="nav-link" data-target="page-signer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 17.25V21h3.75L17.8 9.95l-3.75-3.75L3 17.25z"/>
+          <path d="M20.7 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+        </svg>
+        <span>Signer</span>
+      </div>
+      <div class="nav-link nav-has-new" data-target="page-source">
+        <span class="nav-tag-new">NEW</span>
+        <svg viewBox="0 0 24 24">
+          <path d="M22.7 19.3l-4.4-4.4c.3-.7.5-1.4.5-2.2 0-3.3-2.7-6-6-6s-6 2.7-6 6 2.7 6 6 6c.8 0 1.5-.2 2.2-.5l4.4 4.4 1.3-1.3zM12 16c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z"/>
+        </svg>
+        <span>Jailbreak</span>
+      </div>
+    </div>
+
+    <script>
+// NAV
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    link.classList.add('active');
+    const target = link.dataset.target;
+    const page = document.getElementById(target);
+    if (page) page.classList.add('active');
+  });
+});
+
+// SUB TABS
+document.querySelectorAll('.sub-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cat-list').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    const cat = tab.dataset.cat;
+    const list = document.getElementById('cat-' + cat);
+    if (list) list.classList.add('active');
+  });
+});
+
+// DROP ZONE
+const dropZone = document.getElementById('dropZone');
+const ipaFile = document.getElementById('ipa_file');
+if (dropZone && ipaFile) {
+  dropZone.addEventListener('click', () => ipaFile.click());
+  ipaFile.addEventListener('change', () => {
+    if (ipaFile.files[0]) dropZone.textContent = '✅ ' + ipaFile.files[0].name;
+  });
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file) { ipaFile.files = e.dataTransfer.files; dropZone.textContent = '✅ ' + file.name; }
+  });
+}
+
+// CERT TOGGLE
+const certToggle = document.getElementById('certToggle');
+const serverCertSection = document.getElementById('serverCertSection');
+const manualCertSection = document.getElementById('manualCertSection');
+if (certToggle) {
+  certToggle.addEventListener('change', () => {
+    if (certToggle.checked) {
+      serverCertSection.style.display = 'none';
+      manualCertSection.style.display = 'block';
+    } else {
+      serverCertSection.style.display = 'block';
+      manualCertSection.style.display = 'none';
+    }
+  });
+}
+
+// MODAL
+const modal = document.getElementById('featureModal');
+const modalClose = document.getElementById('modalClose');
+if (modalClose) modalClose.addEventListener('click', () => modal.style.display = 'none');
+
+// TOOL CATEGORY FILTER
+document.querySelectorAll('.tool-cat').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tool-cat').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// GOTO LIBRARY / SIGNER BUTTONS
+document.querySelectorAll('.goto-library').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-target="page-library"]').classList.add('active');
+    document.getElementById('page-library').classList.add('active');
+    const sub = btn.dataset.sub;
+    document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cat-list').forEach(c => c.classList.remove('active'));
+    const tab = document.querySelector('.sub-tab[data-cat="' + sub + '"]');
+    if (tab) tab.classList.add('active');
+    const list = document.getElementById('cat-' + sub);
+    if (list) list.classList.add('active');
+  });
+});
+document.querySelectorAll('.goto-signer').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-target="page-signer"]').classList.add('active');
+    document.getElementById('page-signer').classList.add('active');
+  });
+});
+    </script>
+  </body>
+</html>
